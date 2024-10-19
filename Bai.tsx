@@ -24,6 +24,7 @@ const App = () => {
     var fn = fetch(url);
     fn.then(res=>res.json()).then((data)=>{setData(data)})
   },[])
+
   var url = 'https://645446a0a74f994b333d1a49.mockapi.io/tuan7'
   var job = {};
   var fnAdd = ()=>{
@@ -35,14 +36,21 @@ const App = () => {
                   body: JSON.stringify(job),
     });
   }
-
+  var fnDelete =()=> {
+      fetch(url.concat("/")+1,{
+        method:"Delete"
+    });
+  }
+  var fnEdit =()=> {
+    
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Button title="Add" onPress={fnAdd}/>
       <br/>
-      <Button title="Edit" onPress={fnAdd}/>
+      <Button title="Edit" onPress={fnEdit}/>
       <br/>
-      <Button title="Delete" onPress={fnAdd}/>
+      <Button title="Delete" onPress={fnDelete}/>
       <FlatList
         data={data}
         renderItem={Item}
