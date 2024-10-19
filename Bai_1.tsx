@@ -33,7 +33,7 @@ function DolistScreen({ navigation}) {
   const [data,setData] = useState([]);
 
   useEffect(()=>{
-    var url = 'https://645446a0a74f994b333d1a49.mockapi.io/tuan7'
+    var url = 'https://645446a0a74f994b333d1a49.mockapi.io/Dolist'
     var fn = fetch(url);
     fn.then(res=>res.json()).then((data)=>{setData(data)})
   },[])
@@ -57,16 +57,29 @@ function DolistScreen({ navigation}) {
       </TouchableOpacity>
       <FlatList
         data={data}
-        renderItem={Item}
+        renderItem={({ item }) => (
+                    <Item
+                        name={item.name}
+                        id={item.id}
+                        onEdit={() => handleEdit(item.id)}
+                        onDelete={() => handleDelete(item.id)}
+                    />
+        )}
         keyExtractor={item=>item.id}
       />
+      <TouchableOpacity style={styles.dolist_btn_cong}>
+        <Image source={require('./assets/Frame (5).png')}/>
+      </TouchableOpacity>
     </View>
   );
 }
 
-const Item = ({item}) => (
+const Item = ({ name, id, onEdit, onDelete }) => (
   <TouchableOpacity style={styles.dolist_btn_do}>
-    <Text style={styles.title}>{item.name}</Text>
+    <Image source={require('./assets/Frame (3).png')} style={{margin:10}}/>
+    <Text style={{fontSize:16,fontWeight:700,lineHeight:26,width:200}}>{name}</Text>
+    <TouchableOpacity style={{width:40,height:30,backgroundColor:'red'}}></TouchableOpacity>
+    <Image source={require('./assets/Frame (4).png')} style={{margin:10}}/>
   </TouchableOpacity>
 );
 
@@ -192,6 +205,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     borderRadius:10,
     marginTop:50,
+    marginBottom:50
   },
   dolist_img:{
     margin:10
@@ -208,6 +222,15 @@ const styles = StyleSheet.create({
     alignItems:'center',
     borderRadius:10,
     marginTop:5,
+    justifyContent:'space-around'
+  },
+  dolist_btn_cong:{
+    width:69,
+    height:69,
+    backgroundColor:'#00BDD6',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius:50
   }
 });
 
